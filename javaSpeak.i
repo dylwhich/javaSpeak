@@ -1,7 +1,9 @@
 /* javaSpeak.i */
 %module javaSpeak
+
 %{
 /* Put header files here or function declarations like below */
+  extern const char* getPhonemes(const char *text);
   extern int getRate(int current);
   extern int setRate(int rate);
   extern int getPitch(int current);
@@ -22,6 +24,8 @@
   extern int initialize();
   %}
 
+%newobject getPhonemes;
+extern const char* getPhonemes(const char *text);
 extern int getRate(int current);
 extern int setRate(int rate);
 extern int getPitch(int current);

@@ -17,12 +17,14 @@ Main.class : Main.java $(SWIG_WRAPPERS)
 	javac *.java
 
 javaSpeak.o : javaSpeak.c
-	gcc -c -fpic -O2 -fno-strict-aliasing javaSpeak.c
+	gcc -c -fpic -O2 -fno-strict-aliasing javaSpeak.c \
+	-I /usr/lib/jvm/java-openjdk/include \
+	-I /usr/lib/jvm/java-openjdk/include/linux 
 
 javaSpeak_wrap.o: javaSpeak_wrap.c
 	gcc -c -fpic -O2 -fno-strict-aliasing javaSpeak_wrap.c \
-        -I /usr/lib/jvm/default-java/include \
-        -I /usr/lib/jvm/default-java/include/linux 
+	-I /usr/lib/jvm/java-openjdk/include \
+	-I /usr/lib/jvm/java-openjdk/include/linux 
 
 $(SWIG_WRAPPERS) : javaSpeak.i
 	swig -java javaSpeak.i

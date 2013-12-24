@@ -1,25 +1,26 @@
 public class Main{
     public static void main(String[] args){
-	if(args.length != 1){
-	    System.out.println("USAGE: java -Djava.library.path=. Main ");
+	if(args.length != 2){
+	    System.out.println("USAGE: java -Djava.library.path=. Main <word1> <word2>");
 	    return ;
 	} 
-
-	if(isContain44greaterNos(args[0])){
-	    //if more than 44 consecutive digits are given then espeak would fail
-	    System.out.println("NOTE: should not contain more than 44 consecutive digits");
-	    return ;
-	}
 
 	System.loadLibrary("javaSpeak"); 
 	javaSpeak.initialize() ;
 
-	javaSpeak.setPitch(99) ;
-	javaSpeak.setRange(99) ;
+	String a = javaSpeak.getPhonemes(args[0]);
+	String b = javaSpeak.getPhonemes(args[1]);
 
-	javaSpeak.speakText(args[0]); 
-	javaSpeak.synchronize();
-	javaSpeak.terminate(); 
+	System.out.println(a);
+	System.out.println(b);
+	
+	if (b.endsWith(a.substring(a.length() - 2))) {
+	    System.out.println("Rhyme!");
+	} else {
+	    System.out.println("No rhyme!");
+	}
+
+	javaSpeak.terminate();
     }
 
     private static boolean isContain44greaterNos(String numCheck){

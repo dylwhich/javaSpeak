@@ -12,6 +12,7 @@
 #include <espeak/speak_lib.h>
 
 int initFlag = 0;
+int voiceFlag = 0;
 /* espeak_POSITION_TYPE position_type; */
 espeak_AUDIO_OUTPUT output = AUDIO_OUTPUT_PLAYBACK;
 /* void* user_data; */
@@ -23,6 +24,25 @@ espeak_AUDIO_OUTPUT output = AUDIO_OUTPUT_PLAYBACK;
 /* unsigned int end_position= 0; */
 /* unsigned int flags= espeakCHARS_AUTO | espeakENDPAUSE; */
 /* unsigned int *unique_identifier; */
+
+char* getPhonemes(const char* text) {
+  char buf[512];
+  char *result;
+  int resl;
+
+  if (voiceFlag != 1) {
+    espeak_SetVoiceByName("english");
+    voiceFlag = 1;
+  }
+
+  espeak_TextToPhonemes(text, buf, 512, espeakCHARS_UTF8, 0x10001);
+
+  resl = strlen(buf);
+  result = (char*) malloc((resl + 1) * sizeof(char));
+  memcpy(result, buf, resl + 1);
+
+  return result;
+}
 
 int getRate(int current) {
   int rate = -1;
