@@ -13,6 +13,9 @@ all : libjavaSpeak.so Main.class
 libjavaSpeak.so : javaSpeak.o javaSpeak_wrap.o
 	gcc -shared javaSpeak.o javaSpeak_wrap.o -o libjavaSpeak.so -l espeak 
 
+install: libjavaSpeak.so
+	cp libjavaSpeak.so /usr/lib/jvm/java-openjdk/jre/lib/amd64/
+
 Main.class : Main.java $(SWIG_WRAPPERS)
 	javac *.java
 
